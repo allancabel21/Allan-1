@@ -34,21 +34,6 @@
                 <label class="block text-sm font-medium text-gray-700">Last Updated</label>
                 <p class="mt-1 text-sm text-gray-900">{{ $user->updated_at->format('M d, Y \a\t g:i A') }}</p>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Email Verified</label>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                    @if($user->email_verified_at) bg-green-100 text-green-800
-                    @else bg-red-100 text-red-800
-                    @endif">
-                    @if($user->email_verified_at)
-                        <i class="fas fa-check-circle mr-1"></i>
-                        Verified
-                    @else
-                        <i class="fas fa-times-circle mr-1"></i>
-                        Not Verified
-                    @endif
-                </span>
-            </div>
         </div>
     </div>
 

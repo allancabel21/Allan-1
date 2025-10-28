@@ -1,0 +1,297 @@
+================================================================================
+RAILWAY DEPLOYMENT INSTRUCTIONS
+Alumni USTP Balubal Portal
+================================================================================
+
+FILES CREATED FOR RAILWAY DEPLOYMENT:
+--------------------------------------
+✓ railway.toml         - Railway configuration file
+✓ Procfile            - Application startup command
+✓ README_RAILWAY.md   - Detailed deployment guide
+✓ DEPLOYMENT.md       - Complete deployment documentation
+
+IMPORTANT: FILES TO COMMIT TO GITHUB
+--------------------------------------
+1. railway.toml
+2. Procfile
+3. README_RAILWAY.md
+4. DEPLOYMENT.md
+5. All your application code
+
+DO NOT COMMIT:
+- .env file
+- storage/app/public/* (uploaded files)
+- vendor/ folder
+- node_modules/
+- Other files in .gitignore
+
+================================================================================
+STEP-BY-STEP DEPLOYMENT
+================================================================================
+
+STEP 1: Push to GitHub
+----------------------
+1. Initialize git (if not already done):
+   git init
+   git add .
+   git commit -m "Initial commit"
+
+2. Create GitHub repository:
+   - Go to GitHub.com
+   - Create new repository
+   - Link your local repo: git remote add origin <your-repo-url>
+   - Push: git push -u origin main
+
+STEP 2: Create Railway Project
+-------------------------------
+1. Go to https://railway.app
+2. Click "New Project"
+3. Select "Deploy from GitHub repo"
+4. Choose your repository
+5. Railway will start deploying automatically
+
+STEP 3: Add MySQL Database
+--------------------------
+1. In Railway project dashboard
+2. Click "New"
+3. Select "Database" → "MySQL"
+4. Railway automatically creates database and sets connection variables
+
+STEP 4: Set Environment Variables
+----------------------------------
+Go to Railway project → Settings → Variables
+
+Add these variables:
+
+APP_NAME=Alumni USTP Balubal Portal
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-app-name.railway.app
+
+# Database (Railway MySQL provides these automatically)
+DB_CONNECTION=mysql
+
+# Session & Cache
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+
+# Storage
+FILESYSTEM_DISK=local
+
+# Mail (Optional - configure if needed)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@your-domain.com
+MAIL_FROM_NAME="Alumni USTP Balubal Portal"
+
+STEP 5: Generate APP_KEY (Optional)
+------------------------------------
+After first deployment, Railway automatically generates APP_KEY.
+But you can also set it manually by generating one:
+
+In your local terminal:
+php artisan key:generate --show
+
+Copy the output and set it as APP_KEY in Railway environment variables.
+
+STEP 6: Wait for Deployment
+----------------------------
+Railway will:
+1. Install dependencies (composer install)
+2. Generate APP_KEY (if not set)
+3. Cache configuration
+4. Run database migrations
+5. Start the application
+
+Check the "Deployments" tab for progress and logs.
+
+STEP 7: Access Your Application
+--------------------------------
+Railway provides a URL like: https://your-app-name.up.railway.app
+
+Click on the URL in Railway dashboard to access your app.
+
+================================================================================
+POST-DEPLOYMENT TASKS
+================================================================================
+
+1. CREATE ADMIN USER
+--------------------
+You need to create an admin user. Options:
+
+Option A: Use Tinker (via Railway Console)
+  - Go to Railway dashboard
+  - Click on your app
+  - Click "Deployments" tab
+  - Click "View Logs" → "Shell"
+  - Run: php artisan tinker
+  - Create user manually
+
+Option B: Create a Seeder
+  - Create: php artisan make:seeder AdminUserSeeder
+  - Edit the seeder file
+  - Run: php artisan db:seed --class=AdminUserSeeder
+
+2. STORAGE WARNING
+------------------
+⚠️ Railway's file system is ephemeral - files are deleted on restart!
+
+This means:
+- Uploaded images will be lost on restart
+- Payment proofs will be lost
+- Profile pictures will be lost
+
+SOLUTIONS:
+A. Use Railway Persistent Volume (limited storage)
+B. Use AWS S3 for file storage (recommended)
+C. Store files in database (not for large files)
+
+3. CUSTOM DOMAIN (Optional)
+----------------------------
+- Go to Railway project → Settings → Domain
+- Add your custom domain
+- Update APP_URL to match
+
+4. MONITORING
+-------------
+- Check Railway logs regularly
+- Monitor resource usage
+- Set up alerts for errors
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+PROBLEM: Build fails
+SOLUTION: 
+- Check Railway build logs
+- Verify composer.json is valid
+- Ensure railway.toml exists
+- Check PHP version compatibility
+
+PROBLEM: App won't start
+SOLUTION:
+- Check Railway application logs
+- Verify all environment variables are set
+- Check database connection
+- Ensure migrations completed
+
+PROBLEM: Database errors
+SOLUTION:
+- Verify MySQL service is running in Railway
+- Check database credentials
+- Run migrations manually via console
+- Check database connection string
+
+PROBLEM: 500 errors
+SOLUTION:
+- Set APP_DEBUG=true temporarily to see errors
+- Check application logs
+- Verify APP_KEY is set
+- Check file permissions
+
+PROBLEM: Images/uploaded files not appearing
+SOLUTION:
+- This is expected due to ephemeral storage
+- Consider implementing cloud storage (S3)
+- Or use Railway persistent volume
+
+================================================================================
+WHAT HAPPENS DURING DEPLOYMENT
+================================================================================
+
+1. Railway detects PHP 8.2+ application
+2. Runs: composer install --no-dev --optimize-autoloader
+3. Runs: php artisan key:generate (if no APP_KEY)
+4. Runs: php artisan config:cache
+5. Runs: php artisan route:cache
+6. Runs: php artisan view:cache
+7. Runs: php artisan migrate --force
+8. Starts: php artisan serve
+
+================================================================================
+USEFUL COMMANDS (Railway Console)
+================================================================================
+
+To access Railway console:
+1. Go to Railway dashboard
+2. Click on your app
+3. Click "Deployments" tab
+4. Click "View Logs" → "Shell"
+
+Commands you can run:
+- php artisan tinker (interactive shell)
+- php artisan migrate (run migrations)
+- php artisan db:seed (seed database)
+- php artisan cache:clear (clear cache)
+- php artisan config:clear (clear config)
+
+================================================================================
+ENVIRONMENT VARIABLES REFERENCE
+================================================================================
+
+REQUIRED:
+- APP_NAME
+- APP_ENV=production
+- APP_DEBUG=false
+- APP_URL
+- DB_CONNECTION=mysql
+
+OPTIONAL:
+- MAIL_* (for email functionality)
+- AWS_* (for S3 file storage)
+- SESSION_LIFETIME
+- CACHE_STORE
+
+Auto-provided by Railway MySQL:
+- DB_HOST
+- DB_PORT
+- DB_DATABASE
+- DB_USERNAME
+- DB_PASSWORD
+
+================================================================================
+SECURITY CHECKLIST
+================================================================================
+
+Before going live:
+□ APP_ENV=production
+□ APP_DEBUG=false
+□ Strong APP_KEY generated
+□ Database credentials secure
+□ HTTPS enabled (Railway provides by default)
+□ Mail configuration tested
+□ Admin account created
+□ File upload validation working
+□ Session security configured
+□ CSRF protection enabled
+
+================================================================================
+ADDITIONAL RESOURCES
+================================================================================
+
+- Railway Docs: https://docs.railway.app
+- Laravel Docs: https://laravel.com/docs
+- GitHub Repo: (your repo URL)
+- Railway Project: (your project URL)
+
+================================================================================
+SUPPORT
+================================================================================
+
+If you encounter issues:
+1. Check Railway build logs
+2. Check Railway application logs
+3. Review DEPLOYMENT.md for detailed guide
+4. Review README_RAILWAY.md for quick start
+5. Check Laravel logs (storage/logs/laravel.log)
+
+================================================================================
+END OF DEPLOYMENT INSTRUCTIONS
+================================================================================
+
