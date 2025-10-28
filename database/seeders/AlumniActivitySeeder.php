@@ -1,0 +1,156 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\AlumniActivity;
+use Carbon\Carbon;
+
+class AlumniActivitySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $activities = [
+            [
+                'title' => 'Annual Homecoming 2024',
+                'description' => 'Join us for our annual homecoming celebration! Reconnect with old friends, meet new alumni, and celebrate our shared memories. The event will feature keynote speakers, campus tours, and a gala dinner.',
+                'type' => 'homecoming',
+                'batch_year' => null,
+                'event_date' => Carbon::now()->addDays(30),
+                'start_time' => '09:00:00',
+                'end_time' => '22:00:00',
+                'location' => 'University Main Campus',
+                'venue' => 'Grand Auditorium',
+                'registration_fee' => 500.00,
+                'max_participants' => 200,
+                'current_participants' => 45,
+                'requirements' => 'Valid alumni ID, RSVP required',
+                'benefits' => 'Networking opportunities, campus tour, gala dinner, alumni directory',
+                'contact_person' => 'Alumni Relations Office',
+                'contact_email' => 'alumni@university.edu',
+                'contact_phone' => '+63 2 1234 5678',
+                'status' => 'published',
+                'is_featured' => true,
+                'registration_deadline' => Carbon::now()->addDays(25),
+            ],
+            [
+                'title' => 'Class of 2020 Reunion',
+                'description' => 'Class of 2020, it\'s time to reunite! Let\'s catch up on what we\'ve been up to since graduation. This intimate gathering will be held at our favorite campus spot.',
+                'type' => 'reunion',
+                'batch_year' => '2020',
+                'event_date' => Carbon::now()->addDays(45),
+                'start_time' => '14:00:00',
+                'end_time' => '18:00:00',
+                'location' => 'Campus Coffee Shop',
+                'venue' => 'The Old Library Cafe',
+                'registration_fee' => 200.00,
+                'max_participants' => 50,
+                'current_participants' => 23,
+                'requirements' => 'Class of 2020 graduate',
+                'benefits' => 'Catch up with classmates, share career updates, group photo',
+                'contact_person' => 'Sarah Johnson',
+                'contact_email' => 'sarah.johnson@email.com',
+                'contact_phone' => '+63 917 123 4567',
+                'status' => 'published',
+                'is_featured' => false,
+                'registration_deadline' => Carbon::now()->addDays(40),
+            ],
+            [
+                'title' => 'Mentorship Session: Career Development',
+                'description' => 'Join our mentorship session focused on career development. Learn from successful alumni about career transitions, leadership skills, and professional growth.',
+                'type' => 'mentorship',
+                'batch_year' => null,
+                'event_date' => Carbon::now()->addDays(20),
+                'start_time' => '10:00:00',
+                'end_time' => '12:00:00',
+                'location' => 'Online',
+                'venue' => 'Zoom Meeting',
+                'registration_fee' => 0.00,
+                'max_participants' => 30,
+                'current_participants' => 18,
+                'requirements' => 'Current student or recent graduate',
+                'benefits' => 'One-on-one mentoring, career advice, networking',
+                'contact_person' => 'Career Services',
+                'contact_email' => 'career@university.edu',
+                'contact_phone' => '+63 2 1234 5679',
+                'status' => 'published',
+                'is_featured' => true,
+                'registration_deadline' => Carbon::now()->addDays(15),
+            ],
+            [
+                'title' => 'Class of 2018 Reunion',
+                'description' => 'Five years since graduation! Let\'s celebrate our achievements and catch up on life updates. This will be a fun evening with games, food, and memories.',
+                'type' => 'reunion',
+                'batch_year' => '2018',
+                'event_date' => Carbon::now()->addDays(60),
+                'start_time' => '18:00:00',
+                'end_time' => '23:00:00',
+                'location' => 'Downtown Hotel',
+                'venue' => 'Grand Ballroom',
+                'registration_fee' => 800.00,
+                'max_participants' => 80,
+                'current_participants' => 34,
+                'requirements' => 'Class of 2018 graduate',
+                'benefits' => 'Dinner, entertainment, awards ceremony, group activities',
+                'contact_person' => 'Michael Chen',
+                'contact_email' => 'michael.chen@email.com',
+                'contact_phone' => '+63 917 234 5678',
+                'status' => 'published',
+                'is_featured' => false,
+                'registration_deadline' => Carbon::now()->addDays(55),
+            ],
+            [
+                'title' => 'Tech Industry Networking Event',
+                'description' => 'Connect with fellow alumni working in the tech industry. Share experiences, discuss trends, and explore collaboration opportunities.',
+                'type' => 'networking',
+                'batch_year' => null,
+                'event_date' => Carbon::now()->addDays(35),
+                'start_time' => '19:00:00',
+                'end_time' => '22:00:00',
+                'location' => 'Tech Hub Building',
+                'venue' => 'Innovation Center',
+                'registration_fee' => 300.00,
+                'max_participants' => 60,
+                'current_participants' => 28,
+                'requirements' => 'Tech industry professional or student',
+                'benefits' => 'Industry insights, job opportunities, collaboration projects',
+                'contact_person' => 'Tech Alumni Association',
+                'contact_email' => 'tech@alumni.edu',
+                'contact_phone' => '+63 917 345 6789',
+                'status' => 'published',
+                'is_featured' => false,
+                'registration_deadline' => Carbon::now()->addDays(30),
+            ],
+            [
+                'title' => 'Mentorship Session: Entrepreneurship',
+                'description' => 'Learn from successful alumni entrepreneurs about starting and growing a business. Get practical advice and connect with potential business partners.',
+                'type' => 'mentorship',
+                'batch_year' => null,
+                'event_date' => Carbon::now()->addDays(25),
+                'start_time' => '14:00:00',
+                'end_time' => '17:00:00',
+                'location' => 'Business School',
+                'venue' => 'Entrepreneurship Lab',
+                'registration_fee' => 0.00,
+                'max_participants' => 25,
+                'current_participants' => 12,
+                'requirements' => 'Aspiring entrepreneur or business student',
+                'benefits' => 'Business plan review, funding advice, mentorship',
+                'contact_person' => 'Entrepreneurship Center',
+                'contact_email' => 'entrepreneur@university.edu',
+                'contact_phone' => '+63 2 1234 5680',
+                'status' => 'published',
+                'is_featured' => false,
+                'registration_deadline' => Carbon::now()->addDays(20),
+            ],
+        ];
+
+        foreach ($activities as $activity) {
+            AlumniActivity::create($activity);
+        }
+    }
+}
