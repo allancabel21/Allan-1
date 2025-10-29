@@ -26,16 +26,6 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy .env.example to .env (optional)
-# RUN cp .env.example .env
-
-# Generate Laravel key
-# RUN php artisan key:generate
-
 # Set file permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
-
-# Expose port 8000 and start the Laravel server
-EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+    &&
